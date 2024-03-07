@@ -12,7 +12,7 @@ TWCA is a Go library for Taiwan Certificate Authority ([TWCA](https://www.twca.c
 ## Installation
 
 ```bash
-go get github.com/flc1125/twca
+go get github.com/flc1125/go-twca
 ```
 
 ## Usage
