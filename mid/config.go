@@ -5,11 +5,11 @@ type Config struct {
 	BusinessNo string
 	HashKeyNo  string
 	HashKey    string
-	ApiVersion string
+	APIVersion string
 }
 
 func (c *Config) init() {
-	if c.ApiVersion == "" {
-		c.ApiVersion = "1.0"
+	if c.APIVersion == "" {
+		c.APIVersion = "1.0"
 	}
 }
