@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"net/http"
 	"time"
-
-	"github.com/davecgh/go-spew/spew"
 )
 
 type ServerSideTransactionRequest struct {
@@ -86,8 +84,6 @@ func (c *Client) ServerSideTransaction(ctx context.Context, req ServerSideTransa
 			}
 		}
 	}
-
-	spew.Dump(response)
 
 	return
 }
