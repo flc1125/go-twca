@@ -9,15 +9,15 @@
 
 TWCA is a Go library for Taiwan Certificate Authority ([TWCA](https://www.twca.com.tw/)) services.
 
-## MID
-
-### Installation
+## Installation
 
 ```bash
-go get github.com/flc1125/twca/mid
+go get github.com/flc1125/twca
 ```
 
-### Usage
+## Usage
+
+### MID
 
 ```go
 package main
