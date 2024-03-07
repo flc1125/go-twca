@@ -18,7 +18,7 @@ type requestOptions struct {
 	withIdentifyNo   bool
 	identifyNoParams []string
 
-	verifyNoGenerator VerifyNoGenerator
+	verifyNoGenerator Generator
 }
 
 func newRequestOptions(opts ...RequestOption) *requestOptions {
@@ -84,12 +84,6 @@ func (c *Client) newRequest(ctx context.Context, method, path string, opts ...Re
 		opt.postValues.Set("BusinessNo", c.config.BusinessNo)
 		opt.postValues.Set("ApiVersion", c.config.ApiVersion)
 		opt.postValues.Set("HashKeyNo", c.config.HashKeyNo)
-	}
-
-	if opt.verifyNoGenerator != nil {
-		opt.postValues.Set("VerifyNo", opt.verifyNoGenerator.Generate())
-	} else {
-		opt.postValues.Set("VerifyNo", c.verifyNoGenerator.Generate())
 	}
 
 	// withIdentifyNoRequestOption
