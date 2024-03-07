@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-type MIDInputParams struct {
+type MIDInputParams struct { //nolint:revive
 	Msisdn     string  `json:"Msisdn"`
 	Birthday   *string `json:"Birthday"`
 	ClauseVer  string  `json:"ClauseVer"`
@@ -21,7 +21,7 @@ type ServerSideTransactionRequest struct {
 	MIDInputParams *MIDInputParams `json:"MIDInputParams"`
 }
 
-type MIDResp struct {
+type MIDResp struct { //nolint:revive
 	Code     string      `json:"code"`
 	FullCode string      `json:"fullcode"`
 	Message  string      `json:"message"`
@@ -33,7 +33,7 @@ type MIDResp struct {
 	Result   interface{} `json:"result"`
 }
 
-type MIDOutputParams struct {
+type MIDOutputParams struct { //nolint:revive
 	MIDResp       *MIDResp `json:"-"`
 	MIDRespString string   `json:"MIDResp"`
 	VerifyCode    string   `json:"VerifyCode"`
@@ -50,7 +50,7 @@ type OutputParams struct {
 
 type ServerSideResponse struct {
 	BusinessNo         string        `json:"BusinessNo"`
-	ApiVersion         string        `json:"ApiVersion"`
+	APIVersion         string        `json:"ApiVersion"`
 	HashKeyNo          string        `json:"HashKeyNo"`
 	VerifyNo           string        `json:"VerifyNo"`
 	ResultCode         string        `json:"ResultCode"`
@@ -61,7 +61,10 @@ type ServerSideResponse struct {
 	OutputParamsString string        `json:"OutputParams"` // for unmarshal
 }
 
-func (c *Client) ServerSideTransaction(ctx context.Context, req ServerSideTransactionRequest) (response ServerSideResponse, err error) {
+func (c *Client) ServerSideTransaction(
+	ctx context.Context,
+	req ServerSideTransactionRequest,
+) (response ServerSideResponse, err error) {
 	bytes, err := json.Marshal(req)
 	if err != nil {
 		return
@@ -93,7 +96,10 @@ type ServerSideVerifyResultRequest struct {
 	Token    string `json:"Token"`
 }
 
-func (c *Client) ServerSideVerifyResult(ctx context.Context, req ServerSideVerifyResultRequest) (response ServerSideResponse, err error) {
+func (c *Client) ServerSideVerifyResult(
+	ctx context.Context,
+	req ServerSideVerifyResultRequest,
+) (response ServerSideResponse, err error) {
 	opts := []RequestOption{
 		withSystemParamsRequestOption(),
 		withIdentifyNoRequestOption([]string{"BusinessNo", "ApiVersion", "HashKeyNo", "VerifyNo", "MemberNo", "Token"}),

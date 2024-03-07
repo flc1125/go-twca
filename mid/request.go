@@ -17,8 +17,6 @@ type requestOptions struct {
 
 	withIdentifyNo   bool
 	identifyNoParams []string
-
-	verifyNoGenerator Generator
 }
 
 func newRequestOptions(opts ...RequestOption) *requestOptions {
@@ -35,12 +33,6 @@ func newRequestOptions(opts ...RequestOption) *requestOptions {
 
 type RequestOption func(*requestOptions)
 
-func addPostValueRequestOption(key, value string) RequestOption {
-	return func(opt *requestOptions) {
-		opt.postValues.Add(key, value)
-	}
-}
-
 func setPostValueRequestOption(key, value string) RequestOption {
 	return func(opt *requestOptions) {
 		opt.postValues.Set(key, value)
@@ -51,10 +43,9 @@ func withSystemParamsRequestOption() RequestOption {
 	return func(opt *requestOptions) {
 		opt.withSystemParams = true
 	}
-
 }
 
-func withPostValueRequestOption(values url.Values) RequestOption {
+func withPostValueRequestOption(values url.Values) RequestOption { //nolint:unused
 	return func(opt *requestOptions) {
 		opt.postValues = values
 	}
@@ -82,7 +73,7 @@ func (c *Client) newRequest(ctx context.Context, method, path string, opts ...Re
 	// withSystemParams
 	if opt.withSystemParams {
 		opt.postValues.Set("BusinessNo", c.config.BusinessNo)
-		opt.postValues.Set("ApiVersion", c.config.ApiVersion)
+		opt.postValues.Set("ApiVersion", c.config.APIVersion)
 		opt.postValues.Set("HashKeyNo", c.config.HashKeyNo)
 	}
 
