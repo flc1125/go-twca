@@ -7,11 +7,11 @@ import (
 )
 
 type MIDClauseResponse struct {
-	Fullcode   string    `json:"fullcode"`
+	FullCode   string    `json:"fullcode"`
 	SrvCode    string    `json:"srvCode"`
 	Code       string    `json:"code"`
 	LastUpdate time.Time `json:"lastUpdate"`
-	Clausever  string    `json:"clausever"`
+	ClauseVer  string    `json:"clausever"`
 	RspTime    time.Time `json:"rspTime"`
 	Html       string    `json:"html"`
 	Lang       string    `json:"lang"`

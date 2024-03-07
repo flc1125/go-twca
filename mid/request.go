@@ -5,16 +5,23 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
+	"strings"
 )
 
 type requestOptions struct {
-	withPost   bool
-	postValues url.Values
+	postValues       url.Values
+	withSystemParams bool
+
+	withIdentifyNo   bool
+	identifyNoParams []string
+
+	verifyNoGenerator VerifyNoGenerator
 }
 
-func newRequestOptions(opts ...requestOption) *requestOptions {
+func newRequestOptions(opts ...RequestOption) *requestOptions {
 	opt := &requestOptions{
 		postValues: url.Values{},
 	}
@@ -26,33 +33,41 @@ func newRequestOptions(opts ...requestOption) *requestOptions {
 	return opt
 }
 
-type requestOption func(*requestOptions)
+type RequestOption func(*requestOptions)
 
-func withPostRequestOption() requestOption {
-	return func(opt *requestOptions) {
-		opt.withPost = true
-	}
-}
-
-func addPostValueRequestOption(key, value string) requestOption {
+func addPostValueRequestOption(key, value string) RequestOption {
 	return func(opt *requestOptions) {
 		opt.postValues.Add(key, value)
 	}
 }
 
-func setPostValueRequestOption(key, value string) requestOption {
+func setPostValueRequestOption(key, value string) RequestOption {
 	return func(opt *requestOptions) {
 		opt.postValues.Set(key, value)
 	}
 }
 
-func withPostValueRequestOption(values url.Values) requestOption {
+func withSystemParamsRequestOption() RequestOption {
+	return func(opt *requestOptions) {
+		opt.withSystemParams = true
+	}
+
+}
+
+func withPostValueRequestOption(values url.Values) RequestOption {
 	return func(opt *requestOptions) {
 		opt.postValues = values
 	}
 }
 
-func (c *Client) newRequest(ctx context.Context, method, path string, opts ...requestOption) (*http.Request, error) {
+func withIdentifyNoRequestOption(params []string) RequestOption {
+	return func(opt *requestOptions) {
+		opt.withIdentifyNo = true
+		opt.identifyNoParams = params
+	}
+}
+
+func (c *Client) newRequest(ctx context.Context, method, path string, opts ...RequestOption) (*http.Request, error) {
 	req, err := http.NewRequestWithContext(ctx, method, c.config.Addr+path, nil)
 	if err != nil {
 		return nil, err
@@ -64,13 +79,32 @@ func (c *Client) newRequest(ctx context.Context, method, path string, opts ...re
 		o(opt)
 	}
 
-	if opt.withPost {
+	// withSystemParams
+	if opt.withSystemParams {
 		opt.postValues.Set("BusinessNo", c.config.BusinessNo)
 		opt.postValues.Set("ApiVersion", c.config.ApiVersion)
 		opt.postValues.Set("HashKeyNo", c.config.HashKeyNo)
-		opt.postValues.Set("VerifyNo", "1")
-		opt.postValues.Set("IdentifyNo", "1")
-		req.PostForm = opt.postValues
+	}
+
+	if opt.verifyNoGenerator != nil {
+		opt.postValues.Set("VerifyNo", opt.verifyNoGenerator.Generate())
+	} else {
+		opt.postValues.Set("VerifyNo", c.verifyNoGenerator.Generate())
+	}
+
+	// withIdentifyNoRequestOption
+	if opt.withIdentifyNo {
+		var buffer bytes.Buffer
+		for _, p := range opt.identifyNoParams {
+			buffer.WriteString(opt.postValues.Get(p))
+		}
+
+		opt.postValues.Set("IdentifyNo", c.buildIdentifyNo(buffer.String()))
+	}
+
+	if opt.postValues != nil {
+		req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=utf-8")
+		req.Body = io.NopCloser(strings.NewReader(opt.postValues.Encode()))
 	}
 
 	return req, nil
