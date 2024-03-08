@@ -7,6 +7,12 @@ import (
 	"time"
 )
 
+type Action string
+
+const (
+	ValidateMSISDNAdvanceAction Action = "ValidateMSISDNAdvance"
+)
+
 type MIDInputParams struct { //nolint:revive
 	Msisdn     string  `json:"Msisdn"`
 	Birthday   *string `json:"Birthday"`

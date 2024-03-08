@@ -17,5 +17,5 @@ vendor/
 _backup
 example
 .todo
-mid/client_test.go
+mid/client_real_test.go
 
