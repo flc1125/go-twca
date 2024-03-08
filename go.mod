@@ -1,6 +1,6 @@
 module github.com/flc1125/go-twca
 
-go 1.22.0
+go 1.22
 
 require github.com/stretchr/testify v1.9.0
 
