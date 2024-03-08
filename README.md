@@ -45,7 +45,7 @@ func main() {
 	})
 
 	// MIDClause
-	resp, err := client.MIDClause(ctx)
+	resp, err := client.Clause(ctx)
 	if err != nil {
 		panic(err)
 	}
