@@ -111,5 +111,7 @@ func (c *Client) doRequest(req *http.Request, dest interface{}) error {
 		return err
 	}
 
+	fmt.Println(buffer.String())
+
 	return json.Unmarshal(buffer.Bytes(), dest)
 }
