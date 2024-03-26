@@ -142,7 +142,7 @@ func (c *Client) decodeServerSideResponse(response *ServerSideResponse) (err err
 	// validate msisdn advance
 	if outputParams.MIDOutputParamsBytes != nil {
 		var midOutputParams MIDOutputParams
-		if err = json.Unmarshal([]byte(outputParams.MIDOutputParamsBytes), &midOutputParams); err != nil {
+		if err = json.Unmarshal(outputParams.MIDOutputParamsBytes, &midOutputParams); err != nil {
 			return
 		}
 		outputParams.MIDOutputParams = &midOutputParams
