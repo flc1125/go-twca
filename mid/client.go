@@ -45,7 +45,7 @@ func (c *Client) init() {
 func (c *Client) buildIdentifyNo(input string) string {
 	input += c.config.HashKey
 
-	utf16le := make([]byte, len(input)*2) //nolint:gomnd
+	utf16le := make([]byte, len(input)*2) //nolint:mnd
 	for i, r := range input {
 		binary.LittleEndian.PutUint16(utf16le[i*2:], uint16(r))
 	}
