@@ -95,7 +95,7 @@ func (c *Client) newRequest(ctx context.Context, method, path string, opts ...Re
 	return req, nil
 }
 
-func (c *Client) doRequest(req *http.Request, dest interface{}) error {
+func (c *Client) doRequest(req *http.Request, dest any) error {
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return err

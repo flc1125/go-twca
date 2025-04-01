@@ -28,15 +28,15 @@ type ServerSideTransactionRequest struct {
 }
 
 type MIDResp struct { //nolint:revive
-	Code     string      `json:"code"`
-	FullCode string      `json:"fullcode"`
-	Message  string      `json:"message"`
-	Msisdn   string      `json:"msisdn"`
-	ReqSeq   string      `json:"reqSeq"`
-	RspSeq   string      `json:"rspSeq"`
-	RspTime  time.Time   `json:"rspTime"`
-	SrvCode  string      `json:"srvCode"`
-	Result   interface{} `json:"result"`
+	Code     string    `json:"code"`
+	FullCode string    `json:"fullcode"`
+	Message  string    `json:"message"`
+	Msisdn   string    `json:"msisdn"`
+	ReqSeq   string    `json:"reqSeq"`
+	RspSeq   string    `json:"rspSeq"`
+	RspTime  time.Time `json:"rspTime"`
+	SrvCode  string    `json:"srvCode"`
+	Result   any       `json:"result"`
 }
 
 type MIDOutputParams struct { //nolint:revive
