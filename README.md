@@ -1,5 +1,6 @@
 # Go TWCA
 
+![Supported Go Versions](https://img.shields.io/badge/Go-%3E%3D1.24.0-blue)
 [![Go Version](https://badgen.net/github/release/flc1125/go-twca/stable)](https://github.com/flc1125/go-twca/releases)
 [![GoDoc](https://pkg.go.dev/badge/github.com/flc1125/go-twca)](https://pkg.go.dev/github.com/flc1125/go-twca)
 [![codecov](https://codecov.io/gh/flc1125/go-twca/graph/badge.svg?token=i8RgDRbbDD)](https://codecov.io/gh/flc1125/go-twca)
