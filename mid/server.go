@@ -13,7 +13,7 @@ const (
 	ValidateMSISDNAdvanceAction Action = "ValidateMSISDNAdvance"
 )
 
-type MIDInputParams struct { //nolint:revive
+type MIDInputParams struct {
 	Msisdn     string  `json:"Msisdn"`
 	Birthday   *string `json:"Birthday"`
 	ClauseVer  string  `json:"ClauseVer"`
@@ -27,7 +27,7 @@ type ServerSideTransactionRequest struct {
 	MIDInputParams *MIDInputParams `json:"MIDInputParams"`
 }
 
-type MIDResp struct { //nolint:revive
+type MIDResp struct {
 	Code     string    `json:"code"`
 	FullCode string    `json:"fullcode"`
 	Message  string    `json:"message"`
@@ -39,7 +39,7 @@ type MIDResp struct { //nolint:revive
 	Result   any       `json:"result"`
 }
 
-type MIDOutputParams struct { //nolint:revive
+type MIDOutputParams struct {
 	MIDResp       *MIDResp `json:"-"`
 	MIDRespString string   `json:"MIDResp"`
 	VerifyCode    string   `json:"VerifyCode"`
@@ -73,7 +73,7 @@ func (c *Client) ServerSideTransaction(
 ) (response ServerSideResponse, err error) {
 	bytes, err := json.Marshal(req)
 	if err != nil {
-		return
+		return response, err
 	}
 
 	opts := []RequestOption{
@@ -85,15 +85,15 @@ func (c *Client) ServerSideTransaction(
 
 	request, err := c.newRequest(ctx, http.MethodPost, "/IDPortal/ServerSideTransaction", opts...)
 	if err != nil {
-		return
+		return response, err
 	}
 
 	if err = c.doRequest(request, &response); err != nil {
-		return
+		return response, err
 	}
 
 	err = c.decodeServerSideResponse(&response)
-	return
+	return response, err
 }
 
 type ServerSideVerifyResultRequest struct {
@@ -116,26 +116,26 @@ func (c *Client) ServerSideVerifyResult(
 
 	request, err := c.newRequest(ctx, http.MethodPost, "/IDPortal/ServerSideVerifyResult", opts...)
 	if err != nil {
-		return
+		return response, err
 	}
 
 	if err = c.doRequest(request, &response); err != nil {
-		return
+		return response, err
 	}
 
 	err = c.decodeServerSideResponse(&response)
-	return
+	return response, err
 }
 
 func (c *Client) decodeServerSideResponse(response *ServerSideResponse) (err error) {
 	if response.OutputParamsString == "" {
-		return
+		return err
 	}
 
 	// unmarshal OutputParamsBytes to OutputParams
 	var outputParams OutputParams
 	if err = json.Unmarshal([]byte(response.OutputParamsString), &outputParams); err != nil {
-		return
+		return err
 	}
 	response.OutputParams = &outputParams
 
@@ -143,18 +143,18 @@ func (c *Client) decodeServerSideResponse(response *ServerSideResponse) (err err
 	if outputParams.MIDOutputParamsBytes != nil {
 		var midOutputParams MIDOutputParams
 		if err = json.Unmarshal(outputParams.MIDOutputParamsBytes, &midOutputParams); err != nil {
-			return
+			return err
 		}
 		outputParams.MIDOutputParams = &midOutputParams
 
 		if midOutputParams.MIDRespString != "" {
 			var midResp MIDResp
 			if err = json.Unmarshal([]byte(midOutputParams.MIDRespString), &midResp); err != nil {
-				return
+				return err
 			}
 			midOutputParams.MIDResp = &midResp
 		}
 	}
 
-	return
+	return err
 }

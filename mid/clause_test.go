@@ -1,7 +1,6 @@
 package mid
 
 import (
-	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -40,7 +39,7 @@ func TestClause(t *testing.T) {
 		APIVersion: MockAPIVersion,
 	})
 
-	resp, err := client.Clause(context.Background())
+	resp, err := client.Clause(t.Context())
 	assert.NoError(t, err)
 	assert.Equal(t, "0", resp.FullCode)
 	assert.Equal(t, "364", resp.SrvCode)

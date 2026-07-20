@@ -22,9 +22,9 @@ type ClauseResponse struct {
 func (c *Client) Clause(ctx context.Context) (response ClauseResponse, err error) {
 	request, err := c.newRequest(ctx, http.MethodPost, "/IDPortal/MIDClause")
 	if err != nil {
-		return
+		return response, err
 	}
 
 	err = c.doRequest(request, &response)
-	return
+	return response, err
 }
