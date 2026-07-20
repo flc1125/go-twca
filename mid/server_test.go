@@ -1,7 +1,6 @@
 package mid
 
 import (
-	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -92,7 +91,7 @@ func TestServer_ServerSideTransaction(t *testing.T) {
 				APIVersion: MockAPIVersion,
 			})
 
-			resp, err := client.ServerSideTransaction(context.Background(), ServerSideTransactionRequest{
+			resp, err := client.ServerSideTransaction(t.Context(), ServerSideTransactionRequest{
 				VerifyNo: test.ResultCode,
 				MemberNo: test.MemberNo,
 				Action:   ValidateMSISDNAdvanceAction,
@@ -161,7 +160,7 @@ func TestServer_ServerSideVerifyResult(t *testing.T) {
 				APIVersion: MockAPIVersion,
 			})
 
-			resp, err := client.ServerSideVerifyResult(context.Background(), ServerSideVerifyResultRequest{
+			resp, err := client.ServerSideVerifyResult(t.Context(), ServerSideVerifyResultRequest{
 				VerifyNo: test.ResultCode,
 				MemberNo: test.MemberNo,
 				Token:    test.Token,
