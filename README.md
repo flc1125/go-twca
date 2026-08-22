@@ -1,10 +1,9 @@
 # Go TWCA
 
-![Supported Go Versions](https://img.shields.io/badge/Go-%3E%3D1.25.0-blue)
+![Supported Go Versions](https://img.shields.io/badge/Go-%3E%3D1.26.0-blue)
 [![Go Version](https://badgen.net/github/release/flc1125/go-twca/stable)](https://github.com/flc1125/go-twca/releases)
 [![GoDoc](https://pkg.go.dev/badge/github.com/flc1125/go-twca)](https://pkg.go.dev/github.com/flc1125/go-twca)
 [![codecov](https://codecov.io/gh/flc1125/go-twca/graph/badge.svg?token=i8RgDRbbDD)](https://codecov.io/gh/flc1125/go-twca)
-[![Go Report Card](https://goreportcard.com/badge/github.com/flc1125/go-twca)](https://goreportcard.com/report/github.com/flc1125/go-twca)
 [![lint](https://github.com/flc1125/go-twca/actions/workflows/lint.yml/badge.svg)](https://github.com/flc1125/go-twca/actions/workflows/lint.yml)
 [![test](https://github.com/flc1125/go-twca/actions/workflows/test.yml/badge.svg)](https://github.com/flc1125/go-twca/actions/workflows/test.yml)
 [![MIT license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
